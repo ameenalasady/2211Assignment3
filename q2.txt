@@ -1,0 +1,50 @@
+1.1: If the ls command were unavailable on a Unix system, one could use the find command as an alternative to view files in the current directory. The command find . -maxdepth 1 will list all files and directories in the current directory. The find command searches for files and directories in a directory hierarchy based on a user-given expression and can perform actions on those files and directories. In this case, the expression -maxdepth 1 specifies that find should only search in the current directory and not descend into any subdirectories.
+
+1.2: The rm command is used to remove files or directories. To ensure that the user is prompted before a file or directory is removed, the -i option can be supplied. To ensure that the user is not prompted before a file or directory is removed, the -f option can be supplied. If both options are used simultaneously, the last one specified takes precedence.
+
+1.3: The rename and mv commands are both used to rename files, but they have some differences. The rename command cannot move files to another directory or drive, while the mv command can. The rename command cannot overwrite existing files, while the mv command can (using the `/y` parameter). Additionally, the mv command will call the rename() C library function to move the files, and if that doesn't work (they're being moved to another filesystem), it will copy the files and remove the originals.
+
+1.4: In this context, ELF stands for Executable and Linkable Format. It is the binary executable file format most commonly used by Linux.
+
+1.5: The ls -l command shows the size of the file in bytes, while the du command shows the space occupied by the file on disk (in units of 1 kB = 1024 bytes)1. Since disk space is allocated in blocks, the size indicated by du is always slightly larger than the space indicated by ls -l1. This is why ls -l test.txt says the filesize is 0 but du test.txt says the file size is 1.
+
+2.1: mkdir -p grandparent/parent/child
+This command will create the grandparent, grandparent/parent, and grandparent/parent/child directories in one step.
+
+2.2: To create a directory with a space in its name, we can either escape the space character with a backslash (\) or enclose the entire directory name in quotes. Here are two examples that create a directory named my dir:
+
+mkdir my\ dir
+mkdir "my dir"
+
+To remove a directory with a space in its name, we can use the same techniques to specify the directory name. Here are two examples that remove a directory named my dir:
+
+rmdir my\ dir
+rmdir "my dir"
+
+2.3: To create a directory and set its permissions to dr-x------ using only the mkdir command, we can use the -m option to set the directory’s mode. Here’s an example that creates a directory named mydir with the desired permissions: 
+
+mkdir -m 500 mydir
+
+In this example, 500 is the octal representation of the desired permissions. The first digit represents the owner’s permissions, the second digit represents the group’s permissions, and the third digit represents others’ permissions. The value 5 in the first digit means that the owner has read (4) and execute (1) permissions. The value 0 in the second and third digits means that the group and others have no permissions.
+
+2.4: An easy way to return to the previous working directory without using the explicit command cd /dir1/dir2/dir3 is to use the cd - command. This command changes the current working directory to the previous working directory. Here’s an example:
+
+cd /dir1/dir2/dir3
+cd /dir4/dir5/dir6
+cd -
+
+After executing these commands, the current working directory will be /dir1/dir2/dir3.
+
+2.5: To determine which folder is the 6th folder in the stack, we can use the dirs command with the -v option to display the directory stack with one entry per line, prefixed with its position in the stack. The 6th folder will be listed next to the number 5 (since the stack is zero-indexed).
+
+To quickly change to the 6th directory in the stack, we can use the cd command followed by the tilde (~) and the index of the directory in the stack. For example, to change to the 6th directory in the stack, we would enter cd ~5.
+
+3.1: To print out what modifications are being made when using chmod, we can use the -v (verbose) option.
+
+3.2: To get the ownership of file2 to match file1, we can use the --reference option with chown. For example: chown --reference=file1 file2.
+
+3.3: To display file permission, user ownership, and group ownership only when using the stat command, we can use the -c option followed by a format string. For example: stat -c "%A %U %G" filename.
+
+3.4: To grant a group permission to write data to a file, but prevent the users in that group from moving, removing, or renaming the file, we can use the chmod command to set the group write permission for the file while ensuring that the directory containing the file does not have the group write permission set.
+
+3.4: When using chmod in symbolic mode, if u/g/o/a are omitted, the permissions are changed for all users (i.e., it is equivalent to specifying a). For example, chmod +x filename is equivalent to chmod a+x filename.
